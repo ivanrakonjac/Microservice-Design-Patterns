@@ -1,3 +1,3 @@
 # Microservice-Design-Patterns
 
-1) Remote Config server
+1) Config server
