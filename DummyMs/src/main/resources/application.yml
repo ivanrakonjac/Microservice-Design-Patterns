@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: config-server
+    profiles:
+        active: native
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/ivanrakonjac/Microservice-Design-Patterns.git
+          clone-on-start: false
+        default-label: master
+        bootstrap: true
+        native:
+          search-locations: classpath:/config
+      enabled: true
+
+server:
+  port: 8071
+
+management:
+  security:
+    enabled: false
