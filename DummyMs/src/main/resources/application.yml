@@ -1,23 +1,11 @@
 spring:
   application:
-    name: config-server
-    profiles:
-        active: native
+    name: dummy_ms
+  profiles:
+    active : dev
   cloud:
     config:
-      server:
-        git:
-          uri: https://github.com/ivanrakonjac/Microservice-Design-Patterns.git
-          clone-on-start: false
-        default-label: master
-        bootstrap: true
-        native:
-          search-locations: classpath:/config
-      enabled: true
+      uri : http://localhost:8071
 
 server:
-  port: 8071
-
-management:
-  security:
-    enabled: false
+  port: 8072
