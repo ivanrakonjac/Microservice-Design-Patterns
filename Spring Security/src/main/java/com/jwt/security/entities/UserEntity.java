@@ -22,7 +22,6 @@ import java.util.*;
 public class UserEntity implements Serializable, UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "username")
     private String username;
 
@@ -39,6 +38,7 @@ public class UserEntity implements Serializable, UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
     @Override
