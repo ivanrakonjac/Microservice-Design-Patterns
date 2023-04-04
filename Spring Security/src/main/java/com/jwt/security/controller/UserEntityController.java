@@ -3,6 +3,7 @@ package com.jwt.security.controller;
 import com.jwt.security.entities.UserEntity;
 import com.jwt.security.service.UserEntityService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserEntityController {
 
     private final UserEntityService userService;
