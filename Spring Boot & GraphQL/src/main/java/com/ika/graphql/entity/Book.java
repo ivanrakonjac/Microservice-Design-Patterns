@@ -1,9 +1,7 @@
 package com.ika.graphql.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -21,4 +19,9 @@ public class Book {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="author_id", nullable = false)
+    @JsonBackReference
+    private Author author;
 }
