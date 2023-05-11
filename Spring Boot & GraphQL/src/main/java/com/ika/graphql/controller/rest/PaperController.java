@@ -1,7 +1,7 @@
-package com.ika.graphql.controller;
+package com.ika.graphql.controller.rest;
 
-import com.ika.graphql.entity.Book;
-import com.ika.graphql.service.BookService;
+import com.ika.graphql.entity.Paper;
+import com.ika.graphql.service.PaperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/papers")
 @RequiredArgsConstructor
-public class BookController {
+public class PaperController {
 
-    private final BookService bookService;
+    private final PaperService paperService;
 
     @GetMapping("")
-    public List<Book> getAllBooks(){
-        return bookService.getAllBooks();
+    public List<Paper> getAllPapers(){
+        return paperService.getAllPapers();
     }
 }
