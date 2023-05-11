@@ -1,4 +1,4 @@
-package com.ika.graphql.controller;
+package com.ika.graphql.controller.rest;
 
 import com.ika.graphql.entity.Author;
 import com.ika.graphql.service.AuthorService;
