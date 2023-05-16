@@ -1,17 +1,14 @@
 package com.ika.graphql.controller.graphql;
 
-import com.ika.graphql.dtos.graphql.BookInput;
 import com.ika.graphql.entity.Author;
-import com.ika.graphql.entity.Book;
 import com.ika.graphql.repository.AuthorRepository;
-import com.ika.graphql.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -20,27 +17,16 @@ import java.util.Optional;
 public class AuthorControllerGraphQL {
 
     private final AuthorRepository authorRepository;
-    private final BookRepository bookRepository;
 
     @QueryMapping
-    Iterable<Author> authors() {
+    List<Author> authors() {
         return authorRepository.findAll();
     }
 
     @QueryMapping
     Optional<Author> authorById(@Argument Long id) {
+        log.info("authorById");
         return authorRepository.findById(id);
-    }
-
-    @MutationMapping
-    Book addBook(@Argument BookInput book) {
-
-        Author a = authorRepository.findById(book.getAuthorId()).orElseThrow(() -> new IllegalArgumentException("Author not found!"));
-        Book b = Book.builder().name(book.getName()).author(a).build();
-
-        bookRepository.save(b);
-
-        return b;
     }
 
 }
