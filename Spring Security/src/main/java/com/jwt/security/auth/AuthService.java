@@ -1,5 +1,8 @@
 package com.jwt.security.auth;
 
+import com.jwt.security.auth.dtos.AuthenticationRequest;
+import com.jwt.security.auth.dtos.AuthenticationResponse;
+import com.jwt.security.auth.dtos.RegisterRequest;
 import com.jwt.security.configuration.JwtService;
 import com.jwt.security.entities.Role;
 import com.jwt.security.entities.UserEntity;
@@ -39,13 +42,12 @@ public class AuthService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request){
+
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
 
+        // If I came here user is authenticated
         UserEntity newAuthUser = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         String newUserToken = jwtService.generateToken(newAuthUser);

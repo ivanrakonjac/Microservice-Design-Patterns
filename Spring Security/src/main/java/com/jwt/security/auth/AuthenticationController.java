@@ -1,5 +1,8 @@
 package com.jwt.security.auth;
 
+import com.jwt.security.auth.dtos.AuthenticationRequest;
+import com.jwt.security.auth.dtos.AuthenticationResponse;
+import com.jwt.security.auth.dtos.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

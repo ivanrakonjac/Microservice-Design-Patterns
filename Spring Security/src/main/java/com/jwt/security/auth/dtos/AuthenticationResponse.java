@@ -1,4 +1,4 @@
-package com.jwt.security.auth;
+package com.jwt.security.auth.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
