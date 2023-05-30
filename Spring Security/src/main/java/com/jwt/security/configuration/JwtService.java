@@ -15,10 +15,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
+/**
+ * JWT utility service
+ */
 
 @Service
 public class JwtService {
 
+    // This is secret key, which we use for signing generated tokens
+    // Key is generated online
     private static final String SECRET_KEY = "6E3272357538782F413F4428472D4B6150645367566B59703373367639792442";
 
     public String extractUsername(String token){
@@ -59,6 +66,14 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * Check does the token has correct username (same as it is passed as a param)
+     * Check is token expired
+     *
+     * @param token
+     * @param userDetails
+     * @return boolean
+     */
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);

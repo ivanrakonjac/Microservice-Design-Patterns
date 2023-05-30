@@ -39,18 +39,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt = authHeader.substring(7);
         final String username = jwtService.extractUsername(jwt);
 
+        // SecurityContextHolder.getContext().getAuthentication() == null means that user is not authenticated
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
+            // We are checking user from the DB
+            // UserDetailsService bean is created in ApplicationConfig file where we implemented loadUserByUsername method
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if(jwtService.isTokenValid(jwt, userDetails)){
 
+                // Class needed by SpringSecurity to updated UserDetails info
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
                         userDetails.getAuthorities()
                 );
 
+                // Method to save some additional details about the authentication request, such as the remote IP address and the session ID
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
@@ -58,6 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
 
+            // I am passing request to filter chain
             filterChain.doFilter(request, response);
         }
 

@@ -19,6 +19,7 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
+    // SecurityFilterChain bean is responsible for defining the filter chain that processes incoming HTTP requests and performs security-related operations
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
