@@ -19,11 +19,21 @@ public class UserEntityController {
 
     private final UserEntityService userService;
 
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping(value = "", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<UserEntity>> getUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping(value = "/user", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<UserEntity>> getUsers_USER() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/admin", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<UserEntity>> getUsers_ADMIN() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
 
 }
