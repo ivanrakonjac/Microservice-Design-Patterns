@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.*;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -61,7 +61,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 1) ))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 8) ))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -70,8 +70,8 @@ public class JwtService {
      * Check does the token has correct username (same as it is passed as a param)
      * Check is token expired
      *
-     * @param token
-     * @param userDetails
+     * @param token user token
+     * @param userDetails user details
      * @return boolean
      */
     public boolean isTokenValid(String token, UserDetails userDetails){
