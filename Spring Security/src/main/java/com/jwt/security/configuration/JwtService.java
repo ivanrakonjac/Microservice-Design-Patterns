@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * JWT utility service
@@ -26,7 +26,10 @@ public class JwtService {
 
     // This is secret key, which we use for signing generated tokens
     // Key is generated online
-    private static final String SECRET_KEY = "6E3272357538782F413F4428472D4B6150645367566B59703373367639792442";
+    @Value("${jwt.secret-key}")
+    private String SECRET_KEY;
+
+    private static final long JWT_EXPIRATION_TIME_IN_MINUTES = 8;
 
     public String extractUsername(String token){
         return extractClaims(token, Claims::getSubject);
@@ -61,7 +64,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 8) ))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * JWT_EXPIRATION_TIME_IN_MINUTES) ))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -85,7 +88,7 @@ public class JwtService {
 
     private Map<String, Object> populateExtraClaims(UserEntity userEntity){
         Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("role", userEntity.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()).get(0));
+        extraClaims.put("role", userEntity.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().get(0));
         extraClaims.put("firstName", userEntity.getFirstName());
         extraClaims.put("lastName", userEntity.getLastName());
         return extraClaims;
