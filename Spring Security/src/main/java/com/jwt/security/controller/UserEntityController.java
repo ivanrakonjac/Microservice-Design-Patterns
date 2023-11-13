@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/validator")
 @RequiredArgsConstructor
 public class UserEntityController {
 
     private final UserEntityService userService;
 
-    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<UserEntity>> getUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    @GetMapping(value = "", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Boolean> isTokenValid() {
+        return ResponseEntity.ok(true);
     }
 
     @PreAuthorize("hasRole('USER')")
