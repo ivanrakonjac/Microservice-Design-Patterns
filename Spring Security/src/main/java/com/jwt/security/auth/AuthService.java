@@ -8,12 +8,14 @@ import com.jwt.security.entities.Role;
 import com.jwt.security.entities.UserEntity;
 import com.jwt.security.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -38,6 +40,8 @@ public class AuthService {
 
         String newUserToken = jwtService.generateToken(newUser);
 
+        log.info("New user registered successfully with username: " + newUser.getUsername());
+
         return new AuthenticationResponse(newUserToken);
     }
 
@@ -51,6 +55,8 @@ public class AuthService {
         UserEntity newAuthUser = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         String newUserToken = jwtService.generateToken(newAuthUser);
+
+        log.info("User authenticated successfully with username: " + newAuthUser.getUsername());
 
         return new AuthenticationResponse(newUserToken);
     }
