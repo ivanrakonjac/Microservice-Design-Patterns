@@ -29,7 +29,7 @@ public class JwtService {
     @Value("${jwt.secret-key}")
     private String SECRET_KEY;
 
-    private static final long JWT_EXPIRATION_TIME_IN_MINUTES = 8;
+    private static final long JWT_EXPIRATION_TIME_IN_MINUTES = 10;
 
     public String extractUsername(String token){
         return extractClaims(token, Claims::getSubject);
