@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "helloworld";
+
+package helloworld;
+
+service GreetingService {
+  rpc SayHello (RequestMessage) returns (ResponseMessage) {}
+}
+
+service GreetingService2 {
+  rpc SayHello (RequestMessage) returns (ResponseMessage2) {}
+}
+
+message RequestMessage {
+  string name = 1;
+}
+
+message ResponseMessage {
+  string message = 1;
+}
+
+message ResponseMessage2 {
+  string message = 1;
+  string val = 2;
+}
